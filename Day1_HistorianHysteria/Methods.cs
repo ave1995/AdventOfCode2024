@@ -4,6 +4,7 @@ namespace Day1;
 
 public static class Methods
 {
+    [MeasureExecutionTimeAspect]
     public static int CountTotalDistance(string input, bool log = false)
     {
         var (column1, column2) = ParseInput(input);
@@ -22,13 +23,12 @@ public static class Methods
     }
 
     [MeasureExecutionTimeAspect]
-    public static int CountSimilarityScore(string input, bool log = false)
+    public static int CountSimilarityScore(string input)
     {
         var (column1, column2) = ParseInput(input);
 
         var totalSimilarity = 0;
         var ignoredIndex = 0;
-        
         
         foreach (var column1Value in column1)
         {
@@ -44,7 +44,7 @@ public static class Methods
 
         return totalSimilarity;
     }
-
+    
     private static (int[] column1, int[] column2) ParseInput(string input)
     {
         var rows = input.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
@@ -94,7 +94,7 @@ public static class Methods
 
         return result;
     }
-
+    
     private static int BinarySearchLastOccurence(int[] array, int target)
     {
         int low = 0;
