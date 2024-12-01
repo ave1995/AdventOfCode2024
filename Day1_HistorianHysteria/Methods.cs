@@ -1,3 +1,5 @@
+using Extensions;
+
 namespace Day1;
 
 public static class Methods
@@ -19,21 +21,25 @@ public static class Methods
         //return column2.Select((t, i) => Math.Abs(column1[i] - t)).Sum();
     }
 
+    [MeasureExecutionTimeAspect]
     public static int CountSimilarityScore(string input, bool log = false)
     {
         var (column1, column2) = ParseInput(input);
 
         var totalSimilarity = 0;
-
+        var ignoredIndex = 0;
+        
+        
         foreach (var column1Value in column1)
         {
-            var firstOccurence = BinarySearchFirstOccurence(column2, column1Value);
-            var lastOccurence = BinarySearchLastOccurence(column2, column1Value);
+            var firstOccurence = BinarySearchFirstOccurence(column2.Skip(ignoredIndex).ToArray(), column1Value);
+            var lastOccurence = BinarySearchLastOccurence(column2.Skip(ignoredIndex).ToArray(), column1Value);
             
             if (firstOccurence == -1 || lastOccurence == -1) continue;
             
             var occurence = lastOccurence - firstOccurence + 1;
             totalSimilarity += occurence * column1Value;
+            ignoredIndex = lastOccurence + 1;
         }
 
         return totalSimilarity;
