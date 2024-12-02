@@ -28,13 +28,13 @@ public static class Methods
     {
         var (array, length) = ParseInput(input);
         var dictionary = new Dictionary<int, int>();
-        
+
         var totalSimilarity = 0;
 
         for (var i = 0; i < length; i++)
         {
             var value = array[i, 1];
-            if(!dictionary.TryAdd(value, 1))
+            if (!dictionary.TryAdd(value, 1))
                 dictionary[value]++;
         }
 
@@ -46,7 +46,7 @@ public static class Methods
 
         return totalSimilarity;
     }
-    
+
     private static (int[,] array2X, int length) ParseInput(string input)
     {
         var rows = input.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
@@ -59,6 +59,7 @@ public static class Methods
             array[i, 0] = int.Parse(columns[0]);
             array[i, 1] = int.Parse(columns[1]);
         }
+
         return (array, rows.Length);
     }
 
