@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Day2;
+﻿using Day2;
 
 const string example = "7 6 4 2 1\n1 2 7 8 9\n9 7 6 2 1\n1 3 2 4 5\n8 6 4 4 1\n1 3 6 7 9";
 const string input =
