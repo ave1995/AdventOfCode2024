@@ -11,9 +11,11 @@ public static class Methods
         foreach (var row in rows)
             yield return row.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
     }
-    
+
     private static bool IsSafe(int[] array)
     {
+        if (array.Length < 2) return false;
+
         var prevDifference = array[1] - array[0];
 
         if (prevDifference == 0 || Math.Abs(prevDifference) > 3) return false;
@@ -32,12 +34,31 @@ public static class Methods
         return true;
     }
     
+    private static bool IsSafeWithOneLife(int[] array)
+    {
+        if (IsSafe(array))  return true;
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            var temp = array.Where((_, index) => index != i).ToArray();
+            if (!IsSafe(temp)) continue;
+            return true;
+        }
+
+        return false;
+    }
+
+    [MeasureExecutionTimeAspect]
+    public static int SafeReportsCountWithOneError(string input)
+    {
+        var arrays = ParseInput(input);
+        return arrays.Count(IsSafeWithOneLife);
+    }
+
     [MeasureExecutionTimeAspect]
     public static int SafeReportsCount(string input)
     {
         var arrays = ParseInput(input);
-
         return arrays.Count(IsSafe);
     }
-    
 }
